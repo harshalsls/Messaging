@@ -1,6 +1,7 @@
 package com.gibsons.dto;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class ConversationDto {
@@ -8,7 +9,10 @@ public class ConversationDto {
 	private Long id;
 	private String userName;
 	private String message;
-	private Date sentTime;
+	private String sentTime;
+	private List<ConversationDto> userListOne;
+	private List<ConversationDto> userListTwo;
+	
 	public Long getId() {
 		return id;
 	}
@@ -27,11 +31,23 @@ public class ConversationDto {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Date getSentTime() {
+	public String getSentTime() {
 		return sentTime;
 	}
-	public void setSentTime(Date sentTime) {
+	public void setSentTime(String sentTime) {
 		this.sentTime = sentTime;
+	}
+	public List<ConversationDto> getUserListOne() {
+		return userListOne;
+	}
+	public void setUserListOne(List<ConversationDto> userListOne) {
+		this.userListOne = userListOne;
+	}
+	public List<ConversationDto> getUserListTwo() {
+		return userListTwo;
+	}
+	public void setUserListTwo(List<ConversationDto> userListTwo) {
+		this.userListTwo = userListTwo;
 	}
 	
 	
