@@ -1,9 +1,12 @@
-package com.gibsons.messagingapp;
+package com.gibsons;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootConfiguration
+@SpringBootApplication
+
 public class MainApplication {
 
 	public static void main(String[] args) {
