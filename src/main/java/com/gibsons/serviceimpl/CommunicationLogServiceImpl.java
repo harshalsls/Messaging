@@ -34,9 +34,6 @@ public class CommunicationLogServiceImpl implements CommunicationLogService {
 			communicationLog.setMessage(communicationLogDTO.getMessage());
 			communicationLog.setSentTime(communicationLogDTO.getMessageSentTime());
 			communicationLog.setUser(userDetailsService.getUserDetails(communicationLogDTO.getUserName()));
-			// java.util.Date date = new SimpleDateFormat("dd/MM/yyyy
-			// HH:mm:ss").parse(communicationLogDTO.getSentTime());
-			// communicationLog.setSentTime(date);
 			communicationLogRepository.save(communicationLog);
 		} catch (Exception e) {
 			e.printStackTrace();
