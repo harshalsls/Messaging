@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,10 +32,11 @@ public class CommunicationLogServiceImpl implements CommunicationLogService {
 		try {
 			CommunicationLog communicationLog = new CommunicationLog();
 			communicationLog.setMessage(communicationLogDTO.getMessage());
-
+			communicationLog.setSentTime(communicationLogDTO.getMessageSentTime());
 			communicationLog.setUser(userDetailsService.getUserDetails(communicationLogDTO.getUserName()));
-			java.util.Date date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(communicationLogDTO.getSentTime());
-			communicationLog.setSentTime(date);
+			// java.util.Date date = new SimpleDateFormat("dd/MM/yyyy
+			// HH:mm:ss").parse(communicationLogDTO.getSentTime());
+			// communicationLog.setSentTime(date);
 			communicationLogRepository.save(communicationLog);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,46 +45,33 @@ public class CommunicationLogServiceImpl implements CommunicationLogService {
 	}
 
 	@Override
-	public CommunicationLogDTO getAllConversation(CommunicationLogDTO conversationDto) {
+	public List<CommunicationLogDTO> getAllConversation(CommunicationLogDTO conversationDto) {
 		List<CommunicationLog> communicationLogs = null;
-		CommunicationLogDTO dto = null;
+		List<CommunicationLogDTO> communicationLogDTOs = new ArrayList<CommunicationLogDTO>();
+
 		try {
 
 			communicationLogs = communicationLogRepository.findAllByOrderBySentTimeAsc();
-			dto = convertToDto(communicationLogs);
+
+			for (CommunicationLog communicationLog : communicationLogs) {
+				CommunicationLogDTO communicationLogDTO = new CommunicationLogDTO();
+				communicationLogDTO.setMessage(communicationLog.getMessage());
+				communicationLogDTO.setUserName(communicationLog.getUser().getUserName());
+				communicationLogDTO.setUserFirstName(communicationLog.getUser().getFirstName());
+				communicationLogDTO.setUserLastName(communicationLog.getUser().getLastName());
+				communicationLogDTO.setUserId(communicationLog.getUser().getId());
+
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				String strDate = dateFormat.format(communicationLog.getSentTime());
+				communicationLogDTO.setSentTime(strDate);
+
+				communicationLogDTOs.add(communicationLogDTO);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return dto;
-	}
-
-	private CommunicationLogDTO convertToDto(List<CommunicationLog> communicationLogs) {
-		CommunicationLogDTO communicationLogDTO = new CommunicationLogDTO();
-		final List<CommunicationLogDTO> userOneList = new ArrayList<CommunicationLogDTO>();
-		final List<CommunicationLogDTO> userTwoList = new ArrayList<CommunicationLogDTO>();
-
-		communicationLogs.forEach(new Consumer<CommunicationLog>() {
-			@Override
-			public void accept(CommunicationLog post) {
-				CommunicationLogDTO dto = new CommunicationLogDTO();
-				dto.setId(post.getId());
-				dto.setMessage(post.getMessage());
-				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-				String strDate = dateFormat.format(post.getSentTime());
-				dto.setSentTime(strDate);
-				dto.setUserName(post.getUser().getUserName());
-				if (post.getUser().getUserName().equalsIgnoreCase("harshal")) {
-					userOneList.add(dto);
-				} else {
-					userTwoList.add(dto);
-				}
-			}
-		});
-		communicationLogDTO.setUserListOne(userOneList);
-		communicationLogDTO.setUserListTwo(userTwoList);
-
-		return communicationLogDTO;
+		return communicationLogDTOs;
 	}
 
 }

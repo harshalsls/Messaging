@@ -25,8 +25,10 @@ public class CommunicationLog {
 	@ManyToOne // (cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", nullable = false)
 	private UserDetails user;
+
 	@Column(name = "message", length = 5000, nullable = false)
 	private String message;
+
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date sentTime;
 

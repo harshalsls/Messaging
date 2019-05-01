@@ -1,5 +1,7 @@
 package com.gibsons.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,7 @@ import com.gibsons.dto.CommunicationLogDTO;
 import com.gibsons.service.CommunicationLogService;
 
 @RestController
-@RequestMapping("api/conversation")
+@RequestMapping("api/communicationlog")
 public class CommunicationLogController {
 
 	@Autowired
@@ -26,8 +28,8 @@ public class CommunicationLogController {
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 
-	@PostMapping("/getconversation")
-	public CommunicationLogDTO getConversation(@RequestBody CommunicationLogDTO communicationLogDTO) {
+	@PostMapping("/getcommunicationlog")
+	public List<CommunicationLogDTO> getConversation(@RequestBody CommunicationLogDTO communicationLogDTO) {
 		return communicationLogService.getAllConversation(communicationLogDTO);
 	}
 }
