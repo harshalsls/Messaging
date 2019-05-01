@@ -1,7 +1,5 @@
 package com.gibsons.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -11,28 +9,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gibsons.dto.ConversationDto;
-import com.gibsons.dto.UserDetailsDto;
-import com.gibsons.entity.Conversation;
-import com.gibsons.service.ConversationService;
+import com.gibsons.dto.CommunicationLogDTO;
+import com.gibsons.service.CommunicationLogService;
 
 @RestController
 @RequestMapping("api/conversation")
-public class ConversationController {
+public class CommunicationLogController {
 
 	@Autowired
 	@Qualifier("conversationService")
-	private ConversationService conversationService;
-	
+	private CommunicationLogService communicationLogService;
+
 	@PostMapping("/savemessage")
-	public ResponseEntity<?> userInfo(@RequestBody ConversationDto conversationDto) {
-		conversationService.saveData(conversationDto);
-		return new ResponseEntity<>(HttpStatus.OK);
-    }
-	
-	
+	public ResponseEntity<?> userInfo(@RequestBody CommunicationLogDTO communicationLogDTO) {
+		communicationLogService.saveData(communicationLogDTO);
+		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
+
 	@PostMapping("/getconversation")
-	public ConversationDto getConversation(@RequestBody ConversationDto conversationDto) {
-		return conversationService.getAllConversation(conversationDto);
-    }
+	public CommunicationLogDTO getConversation(@RequestBody CommunicationLogDTO communicationLogDTO) {
+		return communicationLogService.getAllConversation(communicationLogDTO);
+	}
 }

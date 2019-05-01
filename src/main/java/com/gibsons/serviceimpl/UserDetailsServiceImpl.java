@@ -10,32 +10,44 @@ import com.gibsons.repository.UserDetailsRepository;
 import com.gibsons.service.UserDetailsService;
 
 @Service("userDetailsService")
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
 
-	
 	@Autowired
 	@Qualifier("userDetailsRepository")
 	private UserDetailsRepository userDetailsRepository;
-	
+
 	@Override
 	public UserDetailsDto userInfo(String userName) {
-		
+
 		UserDetails userDetails = null;
-		
+
 		UserDetailsDto userDetailsDto = new UserDetailsDto();
 		try {
-			userDetails =	userDetailsRepository.findByUserName(userName);
-			
-			userDetailsDto.setId(userDetails.getId());
-			userDetailsDto.setAddress(userDetails.getAddress());
-			userDetailsDto.setFirstName(userDetails.getFirstName());
-			userDetailsDto.setLastName(userDetails.getLastName());
-			userDetailsDto.setUserName(userDetails.getUserName());
-			
+			userDetails = userDetailsRepository.findByUserName(userName);
+			if (userDetails.getId() != null) {
+				userDetailsDto.setId(userDetails.getId());
+				userDetailsDto.setAddress(userDetails.getAddress());
+				userDetailsDto.setFirstName(userDetails.getFirstName());
+				userDetailsDto.setLastName(userDetails.getLastName());
+				userDetailsDto.setUserName(userDetails.getUserName());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return userDetailsDto;
+	}
+
+	@Override
+	public UserDetails getUserDetails(String userName) {
+
+		UserDetails userDetails = null;
+
+		try {
+			userDetails = userDetailsRepository.findByUserName(userName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userDetails;
 	}
 
 }

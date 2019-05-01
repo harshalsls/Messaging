@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.gibsons.entity.Conversation;
+import com.gibsons.entity.CommunicationLog;
 
 @Repository("conversationRepository")
-public interface ConversationRepository extends JpaRepository<Conversation, Long> {
+public interface CommunicationLogRepository extends JpaRepository<CommunicationLog, Long> {
 
-	public List<Conversation> findAllByOrderBySentTimeAsc();
+	public List<CommunicationLog> findAllByOrderBySentTimeAsc();
 }

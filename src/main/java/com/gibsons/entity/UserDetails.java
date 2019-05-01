@@ -29,11 +29,13 @@ public class UserDetails {
 	private Long id;
 	@Column(name = "user_name", length = 20, nullable = false)
 	private String userName;
+	@Column(name = "password", length = 20, nullable = false)
+	private String password;
 	@Column(name = "first_name", length = 20, nullable = false)
 	private String firstName;
 	@Column(name = "last_name", length = 20, nullable = false)
 	private String lastName;
-	@Column(name = "address", length = 200, nullable = false)
+	@Column(name = "address", length = 200, nullable = true)
 	private String address;
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date createdOn;
@@ -72,6 +74,12 @@ public class UserDetails {
 	}
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
